@@ -2,9 +2,6 @@ require "formula"
 
 class Lean < Formula
   homepage "http://leanprover.github.io"
-  url "https://github.com/leanprover/lean/archive/master.tar.gz"
-  # sha1 ''
-  version '0.2'
   head "https://github.com/leanprover/lean.git"
 
   # Required
