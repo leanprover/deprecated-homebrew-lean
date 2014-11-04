@@ -12,19 +12,20 @@ class Lean < Formula
   depends_on 'google-perftools' => :optional
 
   depends_on 'cmake'            => :build
-  option     "with-boost", "Compile using installed boost, not the version shipped with mongodb"
+  option     "with-boost", "Compile using boost"
   depends_on 'boost'            => [:build, :optional]
 
   def install
     args = ["-DCMAKE_INSTALL_PREFIX=#{prefix}",
             "-DCMAKE_BUILD_TYPE=Release",
-            "-DEMACS_LIB=#{lib}/emacs/site-lisp"]
+            "-DEMACS_LIB=#{lib}/emacs/site-lisp",
+            "-DLIBRARY_DIR=./"]
     args << "-DBOOST=ON" if build.with? "boost"
     mkdir 'build' do
       system "cmake", "../src", *args
       system "make", "-j#{ENV.make_jobs}"
-      system "make", "test"
-      system "make", "install"
+      system "make", "-j#{ENV.make_jobs}", "test"
+      system "make", "-j#{ENV.make_jobs}", "install"
     end
   end
 
@@ -37,7 +38,7 @@ class Lean < Formula
 
   def caveats; <<-EOS.undent
     Lean's Emacs mode is installed into
-      #{opt_lib}/emacs/site-lisp
+      #{lib}/emacs/site-lisp
 
     To use the Lean Emacs mode, you need to put the following lines in
     your .emacs file:
