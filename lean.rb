@@ -18,7 +18,7 @@ class Lean < Formula
   def install
     args = ["-DCMAKE_INSTALL_PREFIX=#{prefix}",
             "-DCMAKE_BUILD_TYPE=Release",
-            "-DEMACS_LIB=#{lib}/emacs/site-lisp",
+            "-DEMACS_LISP_DIR=#{prefix}/share/emacs/site-lisp/lean",
             "-DLIBRARY_DIR=./"]
     args << "-DBOOST=ON" if build.with? "boost"
     mkdir 'build' do
@@ -38,7 +38,7 @@ class Lean < Formula
 
   def caveats; <<-EOS.undent
     Lean's Emacs mode is installed into
-      #{lib}/emacs/site-lisp
+      #{prefix}/share/emacs/site-lisp/lean
 
     To use the Lean Emacs mode, you need to put the following lines in
     your .emacs file:
