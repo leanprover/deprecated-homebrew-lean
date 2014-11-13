@@ -60,10 +60,12 @@ if [[ $DOIT == TRUE ]] ; then
     BOTTLE_FILE_YOSEMITE=${FORMULA_NAME}-${VERSION_STRING}-${COMMIT_HASH}.yosemite.bottle.tar.gz
     BOTTLE_FILE_MAVERICKS=${FORMULA_NAME}-${VERSION_STRING}-${COMMIT_HASH}.mavericks.bottle.tar.gz
     if [[ ${OSX_VERSION} = 10.10* ]] ; then
+        mv ${FORMULA_NAME}-${VERSION_STRING}-${COMMIT_HASH}.yosemite.bottle.1.tar.gz ${BOTTLE_FILE_YOSEMITE}
         # Try to download 10.9 file
         wget https://${ORG_NAME}.github.io/homebrew-${REPO_NAME}/${BOTTLE_FILE_MAVERICKS}
     fi
     if [[ ${OSX_VERSION} = 10.9* ]] ; then
+        mv ${FORMULA_NAME}-${VERSION_STRING}-${COMMIT_HASH}.mavericks.bottle.1.tar.gz ${BOTTLE_FILE_MAVERICKS}
         # Try to download 10.10 file
         wget https://${ORG_NAME}.github.io/homebrew-${REPO_NAME}/${BOTTLE_FILE_YOSEMITE}
     fi
