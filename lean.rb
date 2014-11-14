@@ -5,19 +5,19 @@ class Lean < Formula
   url "https://github.com/leanprover/lean.git"
   version "0.2.0-gite7a74589221fd564e33cb536f9c1cb43f01e028e"
 
-  bottle do
-    root_url 'https://leanprover.github.io/homebrew-lean'
-    sha1 'df21fd69d16a6615052a5f7717542d169861e174' => :yosemite
-    sha1 '57c2b1b007bccaeef2f08eb4ebf9a825f7a1a171' => :mavericks
-  end
+##BOTTLE_COMMENT##  bottle do
+##BOTTLE_COMMENT##    root_url 'https://leanprover.github.io/homebrew-lean'
+##BOTTLE_COMMENT##    sha1 '##BOTTLE_YOSEMITE_HASH##' => :yosemite
+##BOTTLE_COMMENT##    sha1 '##BOTTLE_MAVERICKS_HASH##' => :mavericks
+##BOTTLE_COMMENT##  end
 
   # Required
   depends_on 'gmp'
   depends_on 'mpfr'
   depends_on 'lua'
+  depends_on 'google-perftools'
   depends_on 'ninja'            => :build
   depends_on 'cmake'            => :build
-  depends_on 'google-perftools' => :optional
   option     "with-boost", "Compile using boost"
   depends_on 'boost'            => [:build, :optional]
 
