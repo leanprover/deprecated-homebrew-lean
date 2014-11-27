@@ -3,13 +3,13 @@ require "formula"
 class Lean < Formula
   homepage "http://leanprover.github.io"
   url "https://github.com/leanprover/lean.git"
-  version "0.2.0-git4bee7554a3babcfa4e0bb021f7face42744a299a"
+  version "0.2.0-git5fff3113a97b95def7f3639df5c30eee50a40742"
 
-  bottle do
-    root_url 'https://leanprover.github.io/homebrew-lean'
-    sha1 '0eba2952f686c1ce7c01f15cf2b036f1481feca4' => :yosemite
-    sha1 '3c4dd676f1f155b3a2a3ac3096288e8d21f6cfc8' => :mavericks
-  end
+##BOTTLE_COMMENT##  bottle do
+##BOTTLE_COMMENT##    root_url 'https://leanprover.github.io/homebrew-lean'
+##BOTTLE_COMMENT##    sha1 '##BOTTLE_YOSEMITE_HASH##' => :yosemite
+##BOTTLE_COMMENT##    sha1 '##BOTTLE_MAVERICKS_HASH##' => :mavericks
+##BOTTLE_COMMENT##  end
 
   # Required
   depends_on 'gmp'
