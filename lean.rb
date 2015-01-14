@@ -5,11 +5,11 @@ class Lean < Formula
   url "https://github.com/leanprover/lean.git"
   version "0.2.0-git91366c989dfa5d6f5c70d470ea5c110a1d3d9776"
 
-##BOTTLE_COMMENT##  bottle do
-##BOTTLE_COMMENT##    root_url 'https://leanprover.github.io/homebrew-lean'
-##BOTTLE_COMMENT##    sha1 '##BOTTLE_YOSEMITE_HASH##' => :yosemite
-##BOTTLE_COMMENT##    sha1 '##BOTTLE_MAVERICKS_HASH##' => :mavericks
-##BOTTLE_COMMENT##  end
+  bottle do
+    root_url 'https://leanprover.github.io/homebrew-lean'
+    sha1 '4ef0ffd6002155bb5b94de7de26f6b6a1ce0a341' => :yosemite
+    sha1 '726fc8a0eaa981f474ab15a38087bfe3b8dea99f' => :mavericks
+  end
 
   # Required
   depends_on 'gmp'
