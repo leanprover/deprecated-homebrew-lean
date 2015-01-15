@@ -11,13 +11,11 @@ How to Install
 
 ```bash
 brew tap leanprover/lean
-brew install --HEAD lean
+brew install lean
 ```
 
-``lean`` is a head-only formula which does not support homebrew's
-update mechanism. Please use the following trick to upgrade lean to
-the latest version:
+To upgrade lean to the latest version, run the following commands:
 
 ```bash
-brew rm lean && brew install --HEAD lean
+brew update && brew upgrade
 ```
