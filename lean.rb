@@ -15,7 +15,6 @@ class Lean < Formula
   depends_on 'gmp'
   depends_on 'mpfr'
   depends_on 'lua'
-  depends_on 'google-perftools'
   depends_on 'ninja'            => :build
   depends_on 'cmake'            => :build
   option     "with-boost", "Compile using boost"
@@ -24,6 +23,7 @@ class Lean < Formula
   def install
     args = ["-DCMAKE_INSTALL_PREFIX=#{prefix}",
             "-DCMAKE_BUILD_TYPE=Release",
+            "-DTCMALLOC=OFF",
             "-DEMACS_LISP_DIR=#{prefix}/share/emacs/site-lisp/lean",
             "-DLIBRARY_DIR=./"]
     args << "-DBOOST=ON" if build.with? "boost"
