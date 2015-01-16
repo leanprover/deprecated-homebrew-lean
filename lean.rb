@@ -5,11 +5,11 @@ class Lean < Formula
   url "https://github.com/leanprover/lean.git"
   version "0.2.0-gitc6290f01d0d83efa99cfa0171c3c496ce4e04051"
 
-  bottle do
-    root_url 'https://leanprover.github.io/homebrew-lean'
-    sha1 '8f7a769b89e44d03a6fd7aa1d828c8f7f53d75e0' => :yosemite
-    sha1 'e5e021e48e7469480c0103a5943c2dae073fa735' => :mavericks
-  end
+##BOTTLE_COMMENT##  bottle do
+##BOTTLE_COMMENT##    root_url 'https://leanprover.github.io/homebrew-lean'
+##BOTTLE_COMMENT##    sha1 '##BOTTLE_YOSEMITE_HASH##' => :yosemite
+##BOTTLE_COMMENT##    sha1 '##BOTTLE_MAVERICKS_HASH##' => :mavericks
+##BOTTLE_COMMENT##  end
 
   # Required
   depends_on 'gmp'
@@ -25,6 +25,7 @@ class Lean < Formula
     args = ["-DCMAKE_INSTALL_PREFIX=#{prefix}",
             "-DCMAKE_BUILD_TYPE=Release",
             "-DEMACS_LISP_DIR=#{prefix}/share/emacs/site-lisp/lean",
+            "-DTCMALLOC=OFF",
             "-DLIBRARY_DIR=./"]
     args << "-DBOOST=ON" if build.with? "boost"
     mkdir 'build' do
