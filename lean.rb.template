@@ -15,7 +15,6 @@ class Lean < Formula
   depends_on 'gmp'
   depends_on 'mpfr'
   depends_on 'lua'
-  depends_on 'google-perftools'
   depends_on 'ninja'            => :build
   depends_on 'cmake'            => :build
   option     "with-boost", "Compile using boost"
