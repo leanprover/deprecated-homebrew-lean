@@ -25,6 +25,7 @@ class Lean < Formula
     args = ["-DCMAKE_INSTALL_PREFIX=#{prefix}",
             "-DCMAKE_BUILD_TYPE=Release",
             "-DEMACS_LISP_DIR=#{prefix}/share/emacs/site-lisp/lean",
+            "-DTCMALLOC=OFF",
             "-DLIBRARY_DIR=./"]
     args << "-DBOOST=ON" if build.with? "boost"
     mkdir 'build' do
