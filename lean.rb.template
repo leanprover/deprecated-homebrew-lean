@@ -44,12 +44,30 @@ class Lean < Formula
 
   def caveats; <<-EOS.undent
     Lean's Emacs mode is installed into
-      #{prefix}/share/emacs/site-lisp/lean
+      /usr/local/share/emacs/site-lisp/lean
 
     To use the Lean Emacs mode, you need to put the following lines in
     your .emacs file:
-      (setq auto-mode-alist (cons '("\\\\.v$" . lean-mode) auto-mode-alist))
-      (autoload 'lean-mode "lean" "Major mode for editing Lean vernacular." t)
+      (require 'package)
+      (add-to-list 'package-archives
+                   '("melpa" . "http://melpa.milkbox.net/packages/") t)
+      (package-initialize)
+
+      ;; Install required/optional packages for lean-mode
+      (defvar lean-mode-required-packages
+        '(company dash dash-functional flycheck f
+                  fill-column-indicator s lua-mode mmm-mode))
+      (let ((need-to-refresh t))
+        (dolist (p lean-mode-required-packages)
+          (when (not (package-installed-p p))
+            (when need-to-refresh
+              (package-refresh-contents)
+              (setq need-to-refresh nil))
+            (package-install p))))
+
+      ;; Set up lean-root path
+      (setq lean-rootdir "/usr/local")
+      (require 'lean-mode)
     EOS
   end
 end
