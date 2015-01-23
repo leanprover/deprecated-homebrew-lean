@@ -5,11 +5,11 @@ class Lean < Formula
   url "https://github.com/leanprover/lean.git"
   version "0.2.0-gitb66b3a6c58ab8386c17a002ddaef32560383fcf5"
 
-  bottle do
-    root_url 'https://leanprover.github.io/homebrew-lean'
-    sha1 '##BOTTLE_YOSEMITE_HASH##' => :yosemite
-    sha1 '059cd044bce95e8324915769638b09a24a7d7780' => :mavericks
-  end
+##BOTTLE_COMMENT##  bottle do
+##BOTTLE_COMMENT##    root_url 'https://leanprover.github.io/homebrew-lean'
+##BOTTLE_COMMENT##    sha1 '##BOTTLE_YOSEMITE_HASH##' => :yosemite
+##BOTTLE_COMMENT##    sha1 '##BOTTLE_MAVERICKS_HASH##' => :mavericks
+##BOTTLE_COMMENT##  end
 
   # Required
   depends_on 'gmp'
@@ -44,12 +44,30 @@ class Lean < Formula
 
   def caveats; <<-EOS.undent
     Lean's Emacs mode is installed into
-      #{prefix}/share/emacs/site-lisp/lean
+      /usr/local/share/emacs/site-lisp/lean
 
     To use the Lean Emacs mode, you need to put the following lines in
     your .emacs file:
-      (setq auto-mode-alist (cons '("\\\\.v$" . lean-mode) auto-mode-alist))
-      (autoload 'lean-mode "lean" "Major mode for editing Lean vernacular." t)
+      (require 'package)
+      (add-to-list 'package-archives
+                   '("melpa" . "http://melpa.milkbox.net/packages/") t)
+      (package-initialize)
+
+      ;; Install required/optional packages for lean-mode
+      (defvar lean-mode-required-packages
+        '(company dash dash-functional flycheck f
+                  fill-column-indicator s lua-mode mmm-mode))
+      (let ((need-to-refresh t))
+        (dolist (p lean-mode-required-packages)
+          (when (not (package-installed-p p))
+            (when need-to-refresh
+              (package-refresh-contents)
+              (setq need-to-refresh nil))
+            (package-install p))))
+
+      ;; Set up lean-root path
+      (setq lean-rootdir "/usr/local")
+      (require 'lean-mode)
     EOS
   end
 end
