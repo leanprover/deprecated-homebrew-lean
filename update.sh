@@ -32,6 +32,7 @@ fi
 
 if [[ $DOIT == TRUE ]] ; then
     # 1. Update formula with a new version
+    echo "1. Update formula with a new version"
     VERSION_MAJOR=`grep -o -i "VERSION_MAJOR \([0-9]\+\)" ${REPO_NAME}/src/CMakeLists.txt | cut -d ' ' -f 2`
     VERSION_MINOR=`grep -o -i "VERSION_MINOR \([0-9]\+\)" ${REPO_NAME}/src/CMakeLists.txt | cut -d ' ' -f 2`
     VERSION_PATCH=`grep -o -i "VERSION_PATCH \([0-9]\+\)" ${REPO_NAME}/src/CMakeLists.txt | cut -d ' ' -f 2`
@@ -45,17 +46,19 @@ if [[ $DOIT == TRUE ]] ; then
     sed -i "" "s/##FORMULA_NAME##/${FORMULA_NAME}/g" ${FORMULA_FILE}
 
     # 2. Push formula
+    echo "2. Push formula"
     git add ${FORMULA_FILE}
     git commit -m "${VERSION_STRING}-${COMMIT_HASH}-${OSX_VERSION} [skip ci]"
     git pull --rebase origin master
     git push origin master:master
 
     # 3. Create a bottle
+    echo "3. Create a bottle"
     brew untap $ORG_NAME/$REPO_NAME
     brew tap $ORG_NAME/$REPO_NAME
     brew rm ${FORMULA_NAME}
-    brew install --build-bottle ${FORMULA_NAME}
-    brew bottle ${FORMULA_NAME}
+    brew install --verbose --build-bottle ${FORMULA_NAME}
+    brew bottle --verbose ${FORMULA_NAME}
     sed -i "" "s/##BOTTLE_COMMENT##//g" ${FORMULA_FILE}
     BOTTLE_FILE_YOSEMITE=${FORMULA_NAME}-${VERSION_STRING}-${COMMIT_HASH}.yosemite.bottle.tar.gz
     BOTTLE_FILE_MAVERICKS=${FORMULA_NAME}-${VERSION_STRING}-${COMMIT_HASH}.mavericks.bottle.tar.gz
@@ -81,6 +84,7 @@ if [[ $DOIT == TRUE ]] ; then
     fi           
 
     # 4. Update formula again with bottle
+    echo "4. Update formula again with bottle"
     if [[ ${PUSH_FORMULA_WITH_BOTTLE} == TRUE ]] ; then
         git add ${FORMULA_FILE}
         git commit -m "Bottle: ${VERSION_STRING}-${COMMIT_HASH}"
@@ -89,6 +93,7 @@ if [[ $DOIT == TRUE ]] ; then
     fi
 
     # 5. Update gh-pages branch
+    echo "5. Update gh-pages branch"
     git branch -D gh-pages
     git checkout --orphan gh-pages
     rm .git/index
