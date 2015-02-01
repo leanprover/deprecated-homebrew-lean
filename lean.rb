@@ -5,11 +5,11 @@ class Lean < Formula
   url "https://github.com/leanprover/lean.git"
   version "0.2.0-gitd52af105d73a5b42bec8e225f4c8c5424510d88a"
 
-  bottle do
-    root_url 'https://leanprover.github.io/homebrew-lean'
-    sha1 '0719ff5f1a9096057a278d26535879a4b485e971' => :yosemite
-    sha1 'a68a7f53cbb53a2ff8e419b595c4dcbbdbeeb2b6' => :mavericks
-  end
+##BOTTLE_COMMENT##  bottle do
+##BOTTLE_COMMENT##    root_url 'https://leanprover.github.io/homebrew-lean'
+##BOTTLE_COMMENT##    sha1 '##BOTTLE_YOSEMITE_HASH##' => :yosemite
+##BOTTLE_COMMENT##    sha1 '##BOTTLE_MAVERICKS_HASH##' => :mavericks
+##BOTTLE_COMMENT##  end
 
   # Required
   depends_on 'gmp'
@@ -23,7 +23,7 @@ class Lean < Formula
   def install
     args = ["-DCMAKE_INSTALL_PREFIX=#{prefix}",
             "-DCMAKE_BUILD_TYPE=Release",
-            "-DEMACS_LISP_DIR=/usr/local/share/emacs/site-lisp/lean",
+            "-DEMACS_LISP_DIR=#{prefix}/share/emacs/site-lisp/lean",
             "-DTCMALLOC=OFF",
             "-DLIBRARY_DIR=./"]
     args << "-DBOOST=ON" if build.with? "boost"
@@ -44,7 +44,7 @@ class Lean < Formula
 
   def caveats; <<-EOS.undent
     Lean's Emacs mode is installed into
-      /usr/local/share/emacs/site-lisp/lean
+      #{HOMEBREW_PREFIX}/share/emacs/site-lisp/lean
 
     To use the Lean Emacs mode, you need to put the following lines in
     your .emacs file:
@@ -67,6 +67,8 @@ class Lean < Formula
 
       ;; Set up lean-root path
       (setq lean-rootdir "/usr/local")
+      (setq-local lean-emacs-path "#{HOMEBREW_PREFIX}/share/emacs/site-lisp/lean")
+      (add-to-list 'load-path (expand-file-name lean-emacs-path))
       (require 'lean-mode)
     EOS
   end
