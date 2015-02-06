@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/leanprover/homebrew-lean.svg?branch=master)](https://travis-ci.org/leanprover/homebrew-lean)
+
 homebrew-lean
 =============
 
@@ -9,8 +11,7 @@ How to Install
 --------------
 
 ```bash
-brew tap leanprover/lean
-brew install lean
+brew install leanprover/lean/lean
 ```
 
 To upgrade lean to the latest version, run the following commands:

@@ -1,0 +1,16 @@
+language: objective-c
+
+install:
+ - brew tap leanprover/lean
+ - brew update
+
+script:
+ - ./check_bottle.sh
+ - brew install lean
+
+notifications:
+  email:
+    recipients:
+     - soonho.kong@gmail.com
+    on_success: change
+    on_failure: always
