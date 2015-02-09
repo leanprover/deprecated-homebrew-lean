@@ -63,14 +63,14 @@ if [[ $DOIT == TRUE ]] ; then
         echo "===================================="
         echo "3. Try to download 10.9 (mavericks) file"
         echo "===================================="
-        wget https://github.com/${ORG_NAME}/homebrew-${REPO_NAME}/blob/mavericks/${BOTTLE_FILE_MAVERICKS}?raw=true -O ${BOTTLE_FILE_MAVERICKS}
+        wget https://github.com/${ORG_NAME}/homebrew-${REPO_NAME}/blob/mavericks/${BOTTLE_FILE_MAVERICKS}?raw=true -O ${BOTTLE_FILE_MAVERICKS} || rm ${BOTTLE_FILE_MAVERICKS}
     fi
     if [[ ${OSX_VERSION} = 10.9* ]] ; then
         OSX_CODENAME=mavericks
         echo "===================================="
         echo "3. Try to download 10.10 (yosemite) file"
         echo "===================================="
-        wget https://github.com/${ORG_NAME}/homebrew-${REPO_NAME}/blob/yosemite/${BOTTLE_FILE_YOSEMITE}?raw=true -O ${BOTTLE_FILE_YOSEMITE}
+        wget https://github.com/${ORG_NAME}/homebrew-${REPO_NAME}/blob/yosemite/${BOTTLE_FILE_YOSEMITE}?raw=true -O ${BOTTLE_FILE_YOSEMITE} || rm ${BOTTLE_FILE_YOSEMITE}
     fi
 
     echo "===================================="
