@@ -7,8 +7,8 @@ class Lean < Formula
 
   bottle do
     root_url 'https://leanprover.github.io/homebrew-lean'
-    sha1 '8b936cab0b0f8e731ec5db2fa39882a81c73c93b' => :yosemite
-    sha1 '158f7d2001b712987193d17808f3dc359e832f86' => :mavericks
+    sha1 '2f392953d1857682d7674034e56dd33c449598dc' => :yosemite
+    sha1 '059c3f3533d63a795e93b398fefb1b3e893c67d7' => :mavericks
   end
 
   # Required
