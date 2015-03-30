@@ -1,6 +1,4 @@
-[![Build Status](https://travis-ci.org/leanprover/homebrew-lean.svg?branch=master)](https://travis-ci.org/leanprover/homebrew-lean)
-
-homebrew-lean
+homebrew-lean [![Build Status](https://travis-ci.org/leanprover/homebrew-lean.svg?branch=master)](https://travis-ci.org/leanprover/homebrew-lean)
 =============
 
 Homebrew tap for [Lean theorem prover][lean]
