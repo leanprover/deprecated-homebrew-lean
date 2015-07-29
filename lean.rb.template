@@ -8,7 +8,6 @@ class Lean < Formula
 ##BOTTLE_COMMENT##  bottle do
 ##BOTTLE_COMMENT##    root_url 'https://##ORG_NAME##.github.io/homebrew-##FORMULA_NAME##'
 ##BOTTLE_COMMENT##    sha1 '##BOTTLE_YOSEMITE_HASH##' => :yosemite
-##BOTTLE_COMMENT##    sha1 '##BOTTLE_MAVERICKS_HASH##' => :mavericks
 ##BOTTLE_COMMENT##  end
 
   # Required

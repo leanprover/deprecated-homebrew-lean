@@ -55,76 +55,32 @@ if [[ $DOIT == TRUE ]] ; then
     brew bottle --no-revision ./${FORMULA_NAME}.rb
     sed -i "" "s/##BOTTLE_COMMENT##//g" ${FORMULA_FILE}
     BOTTLE_FILE_YOSEMITE=${FORMULA_NAME}-${VERSION_STRING}.yosemite.bottle.tar.gz
-    BOTTLE_FILE_MAVERICKS=${FORMULA_NAME}-${VERSION_STRING}.mavericks.bottle.tar.gz
- 
-    # 3. Try to download bottles for other OSX versions
-    if [[ ${OSX_VERSION} = 10.10* ]] ; then
-        OSX_CODENAME=yosemite
-        echo "===================================="
-        echo "3. Try to download 10.9 (mavericks) file"
-        echo "===================================="
-        wget https://raw.githubusercontent.com/${ORG_NAME}/homebrew-${REPO_NAME}/mavericks/${BOTTLE_FILE_MAVERICKS}
-    fi
-    if [[ ${OSX_VERSION} = 10.9* ]] ; then
-        OSX_CODENAME=mavericks
-        echo "===================================="
-        echo "3. Try to download 10.10 (yosemite) file"
-        echo "===================================="
-        wget https://raw.githubusercontent.com/${ORG_NAME}/homebrew-${REPO_NAME}/yosemite/${BOTTLE_FILE_YOSEMITE}
-    fi
+    grep "sha1" ${FORMULA_FILE}
+    YOSEMITE_HASH=`shasum ${BOTTLE_FILE_YOSEMITE} | cut -d ' ' -f 1`
+    sed -i "" "s/##BOTTLE_YOSEMITE_HASH##/${YOSEMITE_HASH}/g" ${FORMULA_FILE}
+    echo "yosemite  hash : ${YOSEMITE_HASH}"
+    grep "sha1" ${FORMULA_FILE}
 
-    echo "===================================="
-    echo 4. Push the current bottle to the github
-    echo "===================================="
-    BOTTLE_FILE=${FORMULA_NAME}-${VERSION_STRING}.${OSX_CODENAME}.bottle.tar.gz
-    mkdir ${OSX_CODENAME}-tmp && cd ${OSX_CODENAME}-tmp
-    git init
-    git remote add origin git@github.com:${ORG_NAME}/homebrew-${REPO_NAME}
-    cp ../${BOTTLE_FILE} .
-    git add ${BOTTLE_FILE}
-    git ci -m "Add ${BOTTLE_FILE}"
-    git push --force origin master:${OSX_CODENAME}
-    cd ..
-    rm -rf ${OSX_CODENAME}-tmp
+    echo "========================================"
+    echo "3. Update master branch with new formula"
+    echo "========================================"
+    git add ${FORMULA_FILE}
+    git commit -m "Update: ${VERSION_STRING}"
+    git pull --rebase -s recursive -X ours origin master
+    git push origin master:master
 
-    echo "===================================="
-    echo 5. Check whether we have all bottles to update formula or not        
-    echo "===================================="
-    if [ -e ${BOTTLE_FILE_MAVERICKS} ] && [ -e ${BOTTLE_FILE_YOSEMITE} ] ; then
-        grep "sha1" ${FORMULA_FILE}
-        echo "===================================="
-        MAVERICKS_HASH=`shasum ${BOTTLE_FILE_MAVERICKS} | cut -d ' ' -f 1`
-        YOSEMITE_HASH=`shasum ${BOTTLE_FILE_YOSEMITE} | cut -d ' ' -f 1`
-        sed -i "" "s/##BOTTLE_MAVERICKS_HASH##/${MAVERICKS_HASH}/g" ${FORMULA_FILE}
-        sed -i "" "s/##BOTTLE_YOSEMITE_HASH##/${YOSEMITE_HASH}/g" ${FORMULA_FILE}
-        echo "mavericks hash : ${MAVERICKS_HASH}"
-        echo "yosemite  hash : ${YOSEMITE_HASH}"
-        grep "sha1" ${FORMULA_FILE}
-        PUSH_FORMULA_WITH_BOTTLE=TRUE
-        echo Found: ${BOTTLE_FILE_YOSEMITE} and ${BOTTLE_FILE_MAVERICKS}
-    fi           
-
-    if [ "${PUSH_FORMULA_WITH_BOTTLE}" == "TRUE" ] ; then
-        echo "========================================"
-        echo "6. Update master branch with new formula"
-        echo "========================================"
-        git add ${FORMULA_FILE}
-        git commit -m "Update: ${VERSION_STRING}"
-        git pull --rebase -s recursive -X ours origin master
-        git push origin master:master
-        echo "========================================"
-        echo "7. Update gh-pages branch"
-        echo "========================================"
-        git branch -D gh-pages
-        git checkout --orphan gh-pages
-        rm .git/index
-        git add -f *.tar.gz
-        git clean -fxd
-        git commit -m "Bottles: ${VERSION_STRING} [skip ci]"
-        git push origin --force gh-pages:gh-pages
-        git checkout master
-        rm -rf *.tar.gz
-    fi
+    echo "========================================"
+    echo "4. Update gh-pages branch"
+    echo "========================================"
+    git branch -D gh-pages
+    git checkout --orphan gh-pages
+    rm .git/index
+    git add -f *.tar.gz
+    git clean -fxd
+    git commit -m "Bottles: ${VERSION_STRING} [skip ci]"
+    git push origin --force gh-pages:gh-pages
+    git checkout master
+    rm -rf *.tar.gz
 else
     echo "Nothing to do."
 fi
