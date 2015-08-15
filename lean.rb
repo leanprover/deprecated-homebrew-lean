@@ -3,11 +3,11 @@ require "formula"
 class Lean < Formula
   homepage "http://leanprover.github.io"
   url "https://github.com/leanprover/lean.git"
-  version "0.2.0.20150814214957.gitc83d592c17a45e8329697db73732f69e43b556a5"
+  version "0.2.0.20150815124940.git40ef589d8c19b776dd3907d51eeae1b5eae59e62"
 
   bottle do
     root_url 'https://leanprover.github.io/homebrew-lean'
-    sha1 '1162388b6159c0189f4018c80ff3b00a6ca6d78f' => :yosemite
+    sha1 'ff6b2a88936a603b93d05ef20638af7affcf6acc' => :yosemite
   end
 
   # Required
@@ -48,10 +48,11 @@ class Lean < Formula
     To use the Lean Emacs mode, you need to put the following lines in
     your .emacs file:
       (require 'package)
-      (add-to-list 'package-archives
-                   '("melpa" . "http://melpa.milkbox.net/packages/") t)
+      (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+      (when (< emacs-major-version 24)
+        (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
       (package-initialize)
-
+      
       ;; Install required/optional packages for lean-mode
       (defvar lean-mode-required-packages
         '(company dash dash-functional flycheck f
