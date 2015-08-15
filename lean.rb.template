@@ -48,10 +48,11 @@ class Lean < Formula
     To use the Lean Emacs mode, you need to put the following lines in
     your .emacs file:
       (require 'package)
-      (add-to-list 'package-archives
-                   '("melpa" . "http://melpa.milkbox.net/packages/") t)
+      (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+      (when (< emacs-major-version 24)
+        (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
       (package-initialize)
-
+      
       ;; Install required/optional packages for lean-mode
       (defvar lean-mode-required-packages
         '(company dash dash-functional flycheck f
