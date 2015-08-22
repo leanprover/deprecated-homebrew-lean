@@ -3,7 +3,7 @@ require "formula"
 class Lean < Formula
   homepage "http://leanprover.github.io"
   url "https://github.com/leanprover/lean.git"
-  version "0.2.0.20150821213306.git8272ff61f6d17f021b197b23ab0c47849c177b38"
+  version "0.2.0.20150822163535.gitc83b72e9b6642145bc22befc18d37b0f43cdabe6"
 
   bottle do
     root_url 'https://leanprover.github.io/homebrew-lean'
