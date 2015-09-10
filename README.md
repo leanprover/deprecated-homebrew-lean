@@ -15,7 +15,7 @@ brew install leanprover/lean/lean
 To upgrade lean to the latest version, run the following commands:
 
 ```bash
-brew update && brew upgrade
+brew update && brew upgrade lean
 ```
 
 How to Edit the Formula
