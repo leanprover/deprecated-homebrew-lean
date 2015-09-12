@@ -3,11 +3,11 @@ require "formula"
 class Lean < Formula
   homepage "http://leanprover.github.io"
   url "https://github.com/leanprover/lean.git"
-  version "0.2.0.20150911115253.git8d1f4494913dfb75f2d321c8840814b5617ad281"
+  version "0.2.0.20150912023521.git732897340dab9517bc79bac402720c0491efea11"
 
   bottle do
     root_url 'https://leanprover.github.io/homebrew-lean'
-    sha1 '202efa177a5d2c39f1ed7eaa81a3748b5dfdf32f' => :yosemite
+    sha1 'b080056f15610c0bf51d1c19dc51f143fb68d6e8' => :yosemite
   end
 
   # Required
