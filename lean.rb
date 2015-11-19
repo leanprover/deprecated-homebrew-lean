@@ -6,7 +6,7 @@ class Lean < Formula
   version "0.2.0.20151119144622.git6bd92e144a21c629f346a3cd29eee67a32c54b51"
 
   bottle do
-    root_url 'https://dl.bintray.com/dreal/homebrew-dreal'
+    root_url 'https://dl.bintray.com/lean/lean'
     sha256 "1864849f60b0eff22a3a7f90e37ed43d6337fdf7c497a91dc33cd9fbffdbbaaa" => :yosemite
     sha256 "15a44ad048efa12c48193a98f6bc7033701b164fcd958634cc974c1125503eea" => :el_capitan
   end
