@@ -1,4 +1,8 @@
-homebrew-lean [![Build Status](https://travis-ci.org/leanprover/homebrew-lean.svg?branch=master)](https://travis-ci.org/leanprover/homebrew-lean)
+[![Build Status](https://travis-ci.org/leanprover/homebrew-lean.svg?branch=master)](https://travis-ci.org/leanprover/homebrew-lean)
+[ ![Download](https://api.bintray.com/packages/lean/lean/lean/images/download.svg) ](https://bintray.com/lean/lean/lean/_latestVersion)
+
+
+homebrew-lean 
 =============
 
 Homebrew tap for [Lean theorem prover][lean]
