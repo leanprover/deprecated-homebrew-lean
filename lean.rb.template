@@ -6,8 +6,9 @@ class Lean < Formula
   version "##SOURCE_VERSION##.##COMMIT_DATETIME##.##COMMIT_HASH##"
 
 ##BOTTLE_COMMENT##  bottle do
-##BOTTLE_COMMENT##    root_url 'https://##ORG_NAME##.github.io/homebrew-##FORMULA_NAME##'
-##BOTTLE_COMMENT##    sha1 '##BOTTLE_YOSEMITE_HASH##' => :yosemite
+##BOTTLE_COMMENT##    root_url 'https://dl.bintray.com/lean/lean'
+##BOTTLE_COMMENT##    sha256 '##BOTTLE_YOSEMITE_HASH##' => :yosemite
+##BOTTLE_COMMENT##    sha256 '##BOTTLE_EL_CAPITAN_HASH##' => :el_capitan
 ##BOTTLE_COMMENT##  end
 
   # Required
@@ -24,13 +25,13 @@ class Lean < Formula
             "-DCMAKE_BUILD_TYPE=Release",
             "-DEMACS_LISP_DIR=#{prefix}/share/emacs/site-lisp/lean",
             "-DTCMALLOC=OFF",
+            "-GNinja",
             "-DLIBRARY_DIR=./"]
     args << "-DBOOST=ON" if build.with? "boost"
     mkdir 'build' do
       system "cmake", "../src", *args
-      system "make", "-j#{ENV.make_jobs}"
-      system "make", "-j#{ENV.make_jobs}", "test"
-      system "make", "-j#{ENV.make_jobs}", "install"
+      system "ninja"
+      system "ninja", "install"
     end
   end
 
