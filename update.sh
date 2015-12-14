@@ -53,34 +53,6 @@ if [[ $DOIT == TRUE ]] ; then
     brew rm -rf! ${FORMULA_NAME}
     brew install --build-bottle ./${FORMULA_NAME}.rb
     brew bottle --no-revision ./${FORMULA_NAME}.rb
-    sed -i "" "s/##BOTTLE_COMMENT##//g" ${FORMULA_FILE}
-    BOTTLE_FILE_YOSEMITE=${FORMULA_NAME}-${VERSION_STRING}.yosemite.bottle.tar.gz
-    grep "sha1" ${FORMULA_FILE}
-    YOSEMITE_HASH=`shasum ${BOTTLE_FILE_YOSEMITE} | cut -d ' ' -f 1`
-    sed -i "" "s/##BOTTLE_YOSEMITE_HASH##/${YOSEMITE_HASH}/g" ${FORMULA_FILE}
-    echo "yosemite  hash : ${YOSEMITE_HASH}"
-    grep "sha1" ${FORMULA_FILE}
-
-    echo "========================================"
-    echo "3. Update master branch with new formula"
-    echo "========================================"
-    git add ${FORMULA_FILE}
-    git commit -m "Update: ${VERSION_STRING}"
-    git pull --rebase -s recursive -X ours origin master
-    git push origin master:master
-
-    echo "========================================"
-    echo "4. Update gh-pages branch"
-    echo "========================================"
-    git branch -D gh-pages
-    git checkout --orphan gh-pages
-    rm .git/index
-    git add -f *.tar.gz
-    git clean -fxd
-    git commit -m "Bottles: ${VERSION_STRING} [skip ci]"
-    git push origin --force gh-pages:gh-pages
-    git checkout master
-    rm -rf *.tar.gz
 else
     echo "Nothing to do."
 fi
