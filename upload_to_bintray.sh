@@ -20,7 +20,10 @@ BINTRAY_URL=https://api.bintray.com/content/lean/lean/lean
 
 if [ -e ${BOTTLE_FILENAME} ]
 then
+  # Upload Files
   curl -T ${BOTTLE_FILENAME} -u${ID}:${PASSWORD} ${BINTRAY_URL}/${VERSION}/${BOTTLE_FILENAME}
+  # Publish version
+  curl -X POST -u${ID}:${PASSWORD} ${BINTRAY_URL}/${VERSION}/publish
 else 
   echo "File not found: ${BOTTLE_FILENAME}"
 fi
