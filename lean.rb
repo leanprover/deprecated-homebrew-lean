@@ -7,8 +7,8 @@ class Lean < Formula
 
   bottle do
     root_url 'https://dl.bintray.com/lean/lean'
-    sha256 "6e9934f4b1918cb953dbd474c804889db95013e5eb3afc21cbbb807b6ad61719" => :el_capitan
-    sha256 "e1d445345da1f3719e84a023f13afa6e80ed82767b61436db4b3dd42b539b0f9" => :yosemite
+    sha256 "9cf09588c6b074855d6caad14d0d72e69540d9c7ca540e169867ea9afec0f6ef" => :el_capitan
+    sha256 "adad1c8abdd41372e4ca03a0897907f4e4f04ea1bafc534d0221d4443ad9b434" => :yosemite
   end
 
   # Required
