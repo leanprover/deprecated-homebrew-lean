@@ -24,6 +24,8 @@ then
   curl -T ${BOTTLE_FILENAME} -u${ID}:${PASSWORD} ${BINTRAY_URL}/${VERSION}/${BOTTLE_FILENAME}
   # Publish version
   curl -X POST -u${ID}:${PASSWORD} ${BINTRAY_URL}/${VERSION}/publish
+  # Remove the bottle
+  rm -v ${BOTTLE_FILENAME}
 else 
   echo "File not found: ${BOTTLE_FILENAME}"
 fi
