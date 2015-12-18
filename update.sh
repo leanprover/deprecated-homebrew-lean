@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+#
+# Usage:
+#         BINTRAY_ID=<my_id> BINTRAY_PWD=<my_password> ./update.sh
+#
 #---------------------------------------------------
 ORG_NAME=leanprover
 REPO_NAME=lean
@@ -53,6 +57,15 @@ if [[ $DOIT == TRUE ]] ; then
     brew rm -rf! ${FORMULA_NAME}
     brew install --build-bottle ./${FORMULA_NAME}.rb
     brew bottle --no-revision ./${FORMULA_NAME}.rb
+
+    if [ -z ${BINTRAY_ID+x} ] || [ -z ${BINTRAY_PWD+x} ] ; then
+        echo "Fail to find BINTRAY_ID and BINTRAY_PWD env variables."
+    else
+        echo "=============================================="
+        echo "3. Upload/Publish ${VERSION_STRING} to Bintray"
+        echo "=============================================="
+        ./upload_to_bintray.sh ${BINTRAY_ID} ${BINTRAY_PWD} ${VERSION_STRING}
+    fi
 else
     echo "Nothing to do."
 fi
