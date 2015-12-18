@@ -28,6 +28,10 @@ class Lean < Formula
             "-DLIBRARY_DIR=./"]
     args << "-DBOOST=ON" if build.with? "boost"
     mkdir 'build' do
+      system "curl", "-O", "-L", "https://github.com/leanprover/emacs-dependencies/archive/master.zip"
+      system "unzip", "master.zip"
+      system "mv", "emacs-dependencies-master", "../src/emacs/dependencies"
+      system "rm", "master.zip"
       system "cmake", "../src", *args
       system "ninja"
       system "ninja", "install"
@@ -52,7 +56,7 @@ class Lean < Formula
       (when (< emacs-major-version 24)
         (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
       (package-initialize)
-      
+
       ;; Install required/optional packages for lean-mode
       (defvar lean-mode-required-packages
         '(company dash dash-functional flycheck f
