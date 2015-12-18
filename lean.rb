@@ -3,13 +3,13 @@ require "formula"
 class Lean < Formula
   homepage "http://leanprover.github.io"
   url "https://github.com/leanprover/lean.git"
-  version "0.2.0.20151218015014.gita7d1625765cd41fd635450f00d33ad9a91f102b0"
+  version "0.2.0.20151218142951.gitc5223d2d1967aab18afd970ff2ec2a634aa2a41c"
 
-bottle do
-  root_url 'https://dl.bintray.com/lean/lean'
-    sha256 'e97e76d589912ad29eea6cdd1b3305b6c9c1636a145b490910787e8e3c67711c' => :yosemite
-    sha256 '392d745d503e4d1d5ccaec2d53d380fc345b3eef1c287453ebe6b0fa5798aec4' => :el_capitan
-end
+  bottle do
+    root_url 'https://dl.bintray.com/lean/lean'
+    sha256 '410181a36f4f807c030394bd4ebceb14d15b59856859bd23dcc2293ea476eb7a' => :yosemite
+    sha256 '2ea547bcacf52a4ae22986999a916bb5fe0bd68ee3dd8bd8d51d02ddfe6f9a09' => :el_capitan
+  end
 
   # Required
   depends_on 'gmp'
@@ -28,6 +28,10 @@ end
             "-DLIBRARY_DIR=./"]
     args << "-DBOOST=ON" if build.with? "boost"
     mkdir 'build' do
+      system "curl", "-O", "-L", "https://github.com/leanprover/emacs-dependencies/archive/master.zip"
+      system "unzip", "master.zip"
+      system "mv", "emacs-dependencies-master", "../src/emacs/dependencies"
+      system "rm", "master.zip"
       system "cmake", "../src", *args
       system "ninja"
       system "ninja", "install"
@@ -52,7 +56,7 @@ end
       (when (< emacs-major-version 24)
         (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
       (package-initialize)
-      
+
       ;; Install required/optional packages for lean-mode
       (defvar lean-mode-required-packages
         '(company dash dash-functional flycheck f
