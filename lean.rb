@@ -3,13 +3,13 @@ require "formula"
 class Lean < Formula
   homepage "http://leanprover.github.io"
   url "https://github.com/leanprover/lean.git"
-  version "0.2.0.20151213212744.gite3a35ba4fd263cd27b29b30829745244b47e677c"
+  version "0.2.0.20151218015014.gita7d1625765cd41fd635450f00d33ad9a91f102b0"
 
-  bottle do
-    root_url 'https://dl.bintray.com/lean/lean'
-    sha256 "9cf09588c6b074855d6caad14d0d72e69540d9c7ca540e169867ea9afec0f6ef" => :el_capitan
-    sha256 "adad1c8abdd41372e4ca03a0897907f4e4f04ea1bafc534d0221d4443ad9b434" => :yosemite
-  end
+bottle do
+  root_url 'https://dl.bintray.com/lean/lean'
+    sha256 'e97e76d589912ad29eea6cdd1b3305b6c9c1636a145b490910787e8e3c67711c' => :yosemite
+    sha256 '392d745d503e4d1d5ccaec2d53d380fc345b3eef1c287453ebe6b0fa5798aec4' => :el_capitan
+end
 
   # Required
   depends_on 'gmp'
@@ -23,7 +23,6 @@ class Lean < Formula
   def install
     args = ["-DCMAKE_INSTALL_PREFIX=#{prefix}",
             "-DCMAKE_BUILD_TYPE=Release",
-            "-DEMACS_LISP_DIR=#{prefix}/share/emacs/site-lisp/lean",
             "-DTCMALLOC=OFF",
             "-GNinja",
             "-DLIBRARY_DIR=./"]
