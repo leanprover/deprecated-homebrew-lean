@@ -56,7 +56,12 @@ if [[ $DOIT == TRUE ]] ; then
     echo "===================================="
     brew rm -rf! ${FORMULA_NAME}
     brew install --build-bottle ./${FORMULA_NAME}.rb
-    brew bottle --no-revision ./${FORMULA_NAME}.rb
+    # homebrew doesn't allow to generate bottle if it's not in core formula or under a tap.
+    # as a temporary solution, we copy the formula file to the /usr/local/Library/Formula
+    # and remove it after building a bottle
+    cp ./${FORMULA_NAME}.rb /usr/local/Library/Formula/
+    brew bottle --no-revision ${FORMULA_NAME}
+    rm /usr/local/Library/Formula/${FORMULA_NAME}.rb
 
     if [ -z ${BINTRAY_ID+x} ] || [ -z ${BINTRAY_PWD+x} ] ; then
         echo "Fail to find BINTRAY_ID and BINTRAY_PWD env variables."
