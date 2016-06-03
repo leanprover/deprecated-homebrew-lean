@@ -3,12 +3,12 @@ require "formula"
 class Lean < Formula
   homepage "http://leanprover.github.io"
   url "https://github.com/leanprover/lean.git"
-  version "0.2.0.20160323163733.git6f74f6522084926490b7d76794c589554fc3a83a"
+  version "0.2.0.20160602210703.gitc73b2860d5211187e9aa1039d1a49dcabdca4292"
 
   bottle do
     root_url 'https://dl.bintray.com/lean/lean'
-    sha256 '2f6904f33fdd23f4785a7775dd06a248a3e3fba4503adfac5a4f5c6cb12d2f28' => :yosemite
-    sha256 '43ae14fb2313b30183d2d093a3d29a20b2989a2f387224974c12c9ea3f8c4d6c' => :el_capitan
+    sha256 '329689bfef46678547dca02ccc637ed7cd37f6831e0577aa75dc8af0c3231345' => :yosemite
+    sha256 'ac9fe7e4f2c1ea33dc6af5dada8c662728f350cad459c69cd833980a92d93fb1' => :el_capitan
   end
 
   # Required
@@ -33,6 +33,7 @@ class Lean < Formula
       system "mv", "emacs-dependencies-master", "../src/emacs/dependencies"
       system "rm", "master.zip"
       system "cmake", "../src", *args
+      system "ninja", "clean"
       system "ninja"
       system "ninja", "install"
     end

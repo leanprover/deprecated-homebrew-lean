@@ -33,6 +33,7 @@ class Lean < Formula
       system "mv", "emacs-dependencies-master", "../src/emacs/dependencies"
       system "rm", "master.zip"
       system "cmake", "../src", *args
+      system "ninja", "clean"
       system "ninja"
       system "ninja", "install"
     end
