@@ -1,8 +1,9 @@
 class Lean < Formula
   desc "Interactive, automatable, dependently-typed theorem prover"
   homepage "https://leanprover.github.io"
-  url "https://github.com/leanprover/lean.git"
-  version "0.2.0.20160602210703.gitc73b2860d5211187e9aa1039d1a49dcabdca4292"
+  url "https://github.com/leanprover/lean.git",
+      :tag => "0.2.0.20160602210703.gitc73b2860d5211187e9aa1039d1a49dcabdca4292",
+      :revision => "c73b2860d5211187e9aa1039d1a49dcabdca4292"
 
   bottle do
     root_url "https://dl.bintray.com/lean/lean"
