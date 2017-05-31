@@ -29,9 +29,6 @@ class Lean < Formula
   end
 
   def caveats; <<-EOS.undent
-    Lean's Emacs mode is installed into
-      #{HOMEBREW_PREFIX}/share/emacs/site-lisp/lean
-
     To use the Lean Emacs mode, you need to put the following lines in
     your .emacs file:
 
