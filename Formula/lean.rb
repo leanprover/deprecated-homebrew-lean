@@ -73,9 +73,40 @@ class Lean < Formula
   end
 
   test do
-    system "curl", "-O", "-L", "https://github.com/leanprover/lean/archive/master.zip"
-    system "unzip", "master.zip"
-    system "lean-master/tests/lean/test.sh", "#{bin}/lean"
-    system "lean-master/tests/lua/test.sh",  "#{bin}/lean"
+    (testpath/"succeed.lean").write <<-EOS.undent
+      example (p q : Prop) : p ∧ q → q ∧ p :=
+      assume Hpq : p ∧ q,
+      have Hp : p, from and.elim_left Hpq,
+      have Hq : q, from and.elim_right Hpq,
+      show q ∧ p, from and.intro Hq Hp
+    EOS
+
+    (testpath/"fail.lean").write <<-EOS.undent
+      example (p q : Prop) : p ∧ q → q ∧ p :=
+      assume Hpq : p ∧ q,
+      show q ∧ p, from and.intro Hpq Hpq
+    EOS
+    expected_failure_message = <<-EOS.undent
+      /fail.lean:3:17: error: type mismatch at application
+        and.intro Hpq
+      term
+        Hpq
+      has type
+        p ∧ q
+      but is expected to have type
+        q
+    EOS
+
+    # Apparently Lean attempts to lock the library files,
+    # so copy the files into the sandbox.
+    mkdir_p testpath/".local/lib/lean"
+    cp_r prefix/"library", testpath/".local/lib/lean/library"
+    ENV["LEAN_PATH"] = testpath/".local/lib/lean/library"
+
+    assert_equal "", shell_output("#{bin}/lean #{testpath}/succeed.lean")
+
+    assert_match expected_failure_message,
+                 shell_output("#{bin}/lean #{testpath}/fail.lean",
+                              1)
   end
 end
