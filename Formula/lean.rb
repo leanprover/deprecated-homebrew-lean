@@ -16,7 +16,6 @@ class Lean < Formula
   # Required
   depends_on "gmp"
   depends_on "mpfr"
-  depends_on "lua"
   depends_on "ninja"
   depends_on "cmake" => :build
   depends_on "boost" => [:build, :optional]
@@ -55,7 +54,7 @@ class Lean < Formula
       ;; Install required/optional packages for lean-mode
       (defvar lean-mode-required-packages
         '(company dash dash-functional flycheck f
-                  fill-column-indicator s lua-mode mmm-mode))
+                  fill-column-indicator s mmm-mode))
       (let ((need-to-refresh t))
         (dolist (p lean-mode-required-packages)
           (when (not (package-installed-p p))
