@@ -1,8 +1,9 @@
-class Lean < Formula
+class LeanAT02 < Formula
   desc "Interactive, automatable, dependently-typed theorem prover"
   homepage "https://leanprover.github.io"
-  url "https://github.com/leanprover/lean/archive/v3.0.0.tar.gz"
-  sha256 "8eed2fed8158d87521552df687956f8a9b984bfae6e27f8c0fb86b885b93c851"
+  url "https://github.com/leanprover/lean2.git",
+      :revision => "c73b2860d5211187e9aa1039d1a49dcabdca4292"
+  version "0.2.0.20160602210703.gitc73b2860d5211187e9aa1039d1a49dcabdca4292"
 
   bottle do
     root_url "https://dl.bintray.com/lean/lean"
@@ -10,11 +11,16 @@ class Lean < Formula
     sha256 "ac9fe7e4f2c1ea33dc6af5dada8c662728f350cad459c69cd833980a92d93fb1" => :el_capitan
   end
 
+  keg_only :versioned_formula
+
+  option "with-boost", "Compile using boost"
+
   # Required
   depends_on "gmp"
   depends_on "mpfr"
-  depends_on "ninja" => :build
+  depends_on "ninja"
   depends_on "cmake" => :build
+  depends_on "boost" => [:build, :optional]
 
   def install
     args = ["-DCMAKE_INSTALL_PREFIX=#{prefix}",
@@ -22,7 +28,12 @@ class Lean < Formula
             "-DTCMALLOC=OFF",
             "-GNinja",
             "-DLIBRARY_DIR=./"]
+    args << "-DBOOST=ON" if build.with? "boost"
     mkdir "build" do
+      system "curl", "-O", "-L", "https://github.com/leanprover/emacs-dependencies/archive/master.zip"
+      system "unzip", "master.zip"
+      mv "emacs-dependencies-master", "../src/emacs/dependencies"
+      rm "master.zip"
       system "cmake", "../src", *args
       system "ninja", "clean"
       system "ninja"
@@ -36,6 +47,23 @@ class Lean < Formula
 
     To use the Lean Emacs mode, you need to put the following lines in
     your .emacs file:
+      (require 'package)
+      (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+      (when (< emacs-major-version 24)
+        (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+      (package-initialize)
+
+      ;; Install required/optional packages for lean-mode
+      (defvar lean-mode-required-packages
+        '(company dash dash-functional flycheck f
+                  fill-column-indicator s mmm-mode))
+      (let ((need-to-refresh t))
+        (dolist (p lean-mode-required-packages)
+          (when (not (package-installed-p p))
+            (when need-to-refresh
+              (package-refresh-contents)
+              (setq need-to-refresh nil))
+            (package-install p))))
 
       ;; Set up lean-root path
       (setq lean-rootdir "/usr/local")
@@ -69,6 +97,12 @@ class Lean < Formula
       but is expected to have type
         q
     EOS
+
+    # Apparently Lean attempts to lock the library files,
+    # so copy the files into the sandbox.
+    mkdir_p testpath/".local/lib/lean"
+    cp_r prefix/"library", testpath/".local/lib/lean/library"
+    ENV["LEAN_PATH"] = testpath/".local/lib/lean/library"
 
     assert_equal "", shell_output("#{bin}/lean #{testpath}/succeed.lean")
 
