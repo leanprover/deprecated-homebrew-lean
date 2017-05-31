@@ -23,18 +23,16 @@ class LeanAT02 < Formula
   depends_on "boost" => [:build, :optional]
 
   def install
-    args = ["-DCMAKE_INSTALL_PREFIX=#{prefix}",
-            "-DCMAKE_BUILD_TYPE=Release",
-            "-DTCMALLOC=OFF",
-            "-GNinja",
-            "-DLIBRARY_DIR=./"]
-    args << "-DBOOST=ON" if build.with? "boost"
+    cmake_args = std_cmake_args + %w[-DTCMALLOC=OFF
+                                     -GNinja
+                                     -DLIBRARY_DIR=./]
+    cmake_args << "-DBOOST=ON" if build.with? "boost"
     mkdir "build" do
       system "curl", "-O", "-L", "https://github.com/leanprover/emacs-dependencies/archive/master.zip"
       system "unzip", "master.zip"
       mv "emacs-dependencies-master", "../src/emacs/dependencies"
       rm "master.zip"
-      system "cmake", "../src", *args
+      system "cmake", "../src", *cmake_args
       system "ninja", "clean"
       system "ninja"
       system "ninja", "install"

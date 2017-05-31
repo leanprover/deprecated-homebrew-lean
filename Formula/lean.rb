@@ -17,13 +17,11 @@ class Lean < Formula
   depends_on "cmake" => :build
 
   def install
-    args = ["-DCMAKE_INSTALL_PREFIX=#{prefix}",
-            "-DCMAKE_BUILD_TYPE=Release",
-            "-DTCMALLOC=OFF",
-            "-GNinja",
-            "-DLIBRARY_DIR=./"]
+    cmake_args = std_cmake_args + %w[-DTCMALLOC=OFF
+                                     -GNinja
+                                     -DLIBRARY_DIR=./]
     mkdir "build" do
-      system "cmake", "../src", *args
+      system "cmake", "../src", *cmake_args
       system "ninja", "clean"
       system "ninja"
       system "ninja", "install"
