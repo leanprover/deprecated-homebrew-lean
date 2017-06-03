@@ -72,40 +72,40 @@ class LeanAT02 < Formula
   end
 
   test do
-    (testpath/"succeed.lean").write <<-EOS.undent
-      example (p q : Prop) : p ∧ q → q ∧ p :=
-      assume Hpq : p ∧ q,
-      have Hp : p, from and.elim_left Hpq,
-      have Hq : q, from and.elim_right Hpq,
-      show q ∧ p, from and.intro Hq Hp
+    (testpath/"succeed.hlean").write <<-EOS.undent
+      open equiv
+      example (A : Type) : ua erfl = eq.idpath A :=
+      eq_of_fn_eq_fn !eq_equiv_equiv (is_equiv.right_inv !eq_equiv_equiv erfl)
     EOS
 
-    (testpath/"fail.lean").write <<-EOS.undent
-      example (p q : Prop) : p ∧ q → q ∧ p :=
-      assume Hpq : p ∧ q,
-      show q ∧ p, from and.intro Hpq Hpq
+    (testpath/"fail.hlean").write <<-EOS.undent
+      open equiv
+      example (A : Type) : ua erfl = eq.idpath A :=
+      eq_of_fn_eq_fn !eq_equiv_equiv _
     EOS
-    expected_failure_message = <<-EOS.undent
-      /fail.lean:3:17: error: type mismatch at application
-        and.intro Hpq
-      term
-        Hpq
-      has type
-        p ∧ q
-      but is expected to have type
-        q
+    expected_synthesis_failure_message = <<-EOS.undent
+      /fail.hlean:4:31: error: don't know how to synthesize placeholder
+      A : Type
+      ⊢ to_fun (eq_equiv_equiv A A) (ua erfl) = to_fun (eq_equiv_equiv A A) (eq.idpath A)
+    EOS
+    expected_declaration_failure_message = <<-EOS.undent
+      /fail.hlean:4:0: error: failed to add declaration 'example' to environment, value has metavariables
+      remark: set 'formatter.hide_full_terms' to false to see the complete term
+        λ A,
+          eq_of_fn_eq_fn … ?M_1
     EOS
 
     # Apparently Lean attempts to lock the library files,
     # so copy the files into the sandbox.
     mkdir_p testpath/".local/lib/lean"
-    cp_r prefix/"library", testpath/".local/lib/lean/library"
-    ENV["LEAN_PATH"] = testpath/".local/lib/lean/library"
+    cp_r prefix/"library", testpath/".local/lib/lean/hott"
+    ENV["HLEAN_PATH"] = testpath/".local/lib/lean/hott"
 
-    assert_equal "", shell_output("#{bin}/lean #{testpath}/succeed.lean")
+    assert_equal "", shell_output("#{bin}/lean #{testpath}/succeed.hlean")
 
-    assert_match expected_failure_message,
-                 shell_output("#{bin}/lean #{testpath}/fail.lean",
-                              1)
+    output = shell_output("#{bin}/lean #{testpath}/fail.hlean",
+                          1)
+    assert_match expected_synthesis_failure_message, output
+    assert_match expected_declaration_failure_message, output
   end
 end
