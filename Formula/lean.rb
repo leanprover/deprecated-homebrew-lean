@@ -10,6 +10,8 @@ class Lean < Formula
     sha256 "ac9fe7e4f2c1ea33dc6af5dada8c662728f350cad459c69cd833980a92d93fb1" => :el_capitan
   end
 
+  option "with-test", "Run test suite at build-time" # TODO: check each new release to see if we can change the default from skipping the tests to running them.
+
   # Required
   depends_on "gmp"
   depends_on "mpfr"
@@ -24,6 +26,7 @@ class Lean < Formula
       system "cmake", "../src", *cmake_args
       system "ninja", "clean"
       system "ninja"
+      system "ctest" if build.with? "test"
       system "ninja", "install"
     end
   end

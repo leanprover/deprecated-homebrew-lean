@@ -14,6 +14,7 @@ class LeanAT02 < Formula
   keg_only :versioned_formula
 
   option "with-boost", "Compile using boost"
+  option "without-test", "Skip build-time tests (Not recommended)"
 
   # Required
   depends_on "gmp"
@@ -35,6 +36,7 @@ class LeanAT02 < Formula
       system "cmake", "../src", *cmake_args
       system "ninja", "clean"
       system "ninja"
+      system "ctest" if build.with? "test"
       system "ninja", "install"
     end
   end
