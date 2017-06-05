@@ -1,8 +1,8 @@
 class Lean < Formula
   desc "Interactive, automatable, dependently-typed theorem prover"
   homepage "https://leanprover.github.io"
-  url "https://github.com/leanprover/lean/archive/v3.0.0.tar.gz"
-  sha256 "8eed2fed8158d87521552df687956f8a9b984bfae6e27f8c0fb86b885b93c851"
+  url "https://github.com/leanprover/lean/archive/v3.1.0.tar.gz"
+  sha256 "9e68e4be42003ead99cab0759d024b1c4f28dbbe7d8c363de32686dbcfc67561"
 
   bottle do
     root_url "https://dl.bintray.com/lean/lean"
@@ -14,7 +14,6 @@ class Lean < Formula
 
   # Required
   depends_on "gmp"
-  depends_on "mpfr"
   depends_on "ninja" => :build
   depends_on "cmake" => :build
 
