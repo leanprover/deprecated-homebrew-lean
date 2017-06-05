@@ -7,7 +7,7 @@ class Lean < Formula
   bottle do
     cellar :any
     root_url "https://dl.bintray.com/lean/lean"
-    sha256 "fa4cb87104989bd974e1fdc1d05c0d8e9a877920089040d1253bad444be5153e" => :sierra
+    sha256 "02913168261e31ffc4fad059ae6d0f45488de898c63fc4eebbab7c937c04c8e4" => :sierra
   end
 
   option "with-test", "Run test suite at build-time" # TODO: check each new release to see if we can change the default from skipping the tests to running them.
