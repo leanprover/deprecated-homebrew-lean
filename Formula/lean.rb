@@ -6,7 +6,6 @@ class Lean < Formula
 
   bottle do
     cellar :any
-    rebuild 1
     root_url "https://dl.bintray.com/lean/lean"
     sha256 "fa4cb87104989bd974e1fdc1d05c0d8e9a877920089040d1253bad444be5153e" => :sierra
   end
