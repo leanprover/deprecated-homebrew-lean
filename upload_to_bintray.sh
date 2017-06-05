@@ -9,6 +9,9 @@ case `uname -r` in
   15.*)
     OSX_NAME="el_capitan"
     ;;
+  16.*)
+    OSX_NAME="sierra"
+    ;;
   *)
     OSX_NAME="unknown"
     ;;

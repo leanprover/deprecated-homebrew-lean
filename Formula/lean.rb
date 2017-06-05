@@ -5,9 +5,10 @@ class Lean < Formula
   sha256 "9e68e4be42003ead99cab0759d024b1c4f28dbbe7d8c363de32686dbcfc67561"
 
   bottle do
+    cellar :any
+    rebuild 1
     root_url "https://dl.bintray.com/lean/lean"
-    sha256 "329689bfef46678547dca02ccc637ed7cd37f6831e0577aa75dc8af0c3231345" => :yosemite
-    sha256 "ac9fe7e4f2c1ea33dc6af5dada8c662728f350cad459c69cd833980a92d93fb1" => :el_capitan
+    sha256 "fa4cb87104989bd974e1fdc1d05c0d8e9a877920089040d1253bad444be5153e" => :sierra
   end
 
   option "with-test", "Run test suite at build-time" # TODO: check each new release to see if we can change the default from skipping the tests to running them.
