@@ -1,8 +1,8 @@
 class Lean < Formula
   desc "Interactive, automatable, dependently-typed theorem prover"
   homepage "https://leanprover.github.io"
-  url "https://github.com/leanprover/lean/archive/v3.1.0.tar.gz"
-  sha256 "9e68e4be42003ead99cab0759d024b1c4f28dbbe7d8c363de32686dbcfc67561"
+  url "https://github.com/leanprover/lean/archive/v3.2.0.tar.gz"
+  sha256 "2668e075a9bdf4270d75fd60181078b33c078c7288b5bb8ad795819d8d5272cf"
 
   bottle do
     cellar :any
